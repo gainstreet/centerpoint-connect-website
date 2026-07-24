@@ -154,24 +154,44 @@ TESTIMONIALS = ('<section class="section quotes" id="customers"><div class="wrap
     '</div></div></section>')
 
 def trust_strip():
-    logos = [
-        ("2025/08","Partner-Logos-roofed-right.jpg","Roofed Right"),
-        ("2025/07","Partner-Logos-mint-roofing-1.jpg","Mint Roofing"),
-        ("2025/07","Partner-Logos-Bulldog.jpg","Bulldog"),
-        ("2025/07","Partner-Logos-encore.jpg","Encore"),
-        ("2025/07","Partner-Logos-FMWalton.jpg","FM Walton"),
-        ("2025/07","Partner-Logos-FSR.jpg","FSR"),
-        ("2025/07","Partner-Logos-GlobalFM.jpg","Global FM"),
-        ("2025/07","Partner-Logos-All-Weather.jpg","All Weather"),
-        ("2025/07","Partner-Logos-pinaire.jpg","Pinaire"),
-        ("2025/07","Partner-Logos-Roof-Maintenance.jpg","Roof Maintenance"),
-        ("2025/07","Partner-Logos-westcoast.jpg","West Coast"),
-        ("2025/07","Partner-Logos-zurix.jpg","Zurix"),
+    # Real partner logos, converted to WebP, in logos/
+    partners = [
+        ("all-weather-roof","All Weather Roof"),
+        ("mint-roofing","Mint Roofing"),
+        ("global-fm","Global FM"),
+        ("fsr-services","FSR Services"),
+        ("encore-roofing","Encore Roofing"),
+        ("bulldog-group","Bulldog Group"),
+        ("roofed-right","Roofed Right America"),
+        ("texana","Texana Construction Services"),
+        ("zurix-roofing","Zurix Roofing Systems"),
+        ("west-coast","West Coast Florida Enterprises"),
+        ("roof-maintenance","Roof Maintenance Systems"),
+        ("pinaire-roofing","Pinaire Roofing"),
+        ("fw-walton","FW Walton"),
     ]
-    imgs = "".join('<img src="%s/%s/%s" alt="%s" loading="lazy">' % (IMG, d, f, n) for d, f, n in logos)
+    slides = "".join(
+        '<div class="tc-slide"><div class="card"><img src="logos/%s.webp" alt="%s" loading="lazy"></div></div>'
+        % (slug, name) for slug, name in partners)
+    ndots = len(partners) - 5  # number of 6-wide positions
+    dots = "".join('<span class="%s" data-i="%d"></span>' % ("on" if i==0 else "", i) for i in range(max(ndots,1)))
+    js = ('<script>(function(){'
+      'var track=document.getElementById("tcTrack");if(!track)return;'
+      'var slideW=100/6;var total=%d;var max=total-6;var i=0;'
+      'var dotsWrap=document.getElementById("tcDots");'
+      'function render(){track.style.transform="translateX(-"+(i*slideW)+"%%)";'
+      'if(dotsWrap){Array.prototype.forEach.call(dotsWrap.children,function(d,idx){d.className=idx===i?"on":"";});}}'
+      'document.getElementById("tcPrev").onclick=function(){i=Math.max(0,i-1);render();};'
+      'document.getElementById("tcNext").onclick=function(){i=Math.min(max,i+1);render();};'
+      'render();})();</script>' % len(partners))
     return ('<section class="trust"><div class="wrap row">'
         '<div class="stat">Trusted by <b>250+</b> roofing contractors across North America</div>'
-        '<div class="logos">' + imgs + '</div></div></section>')
+        '<div class="trust-carousel">'
+        '<button class="tc-btn" id="tcPrev" aria-label="Previous logos">&#8249;</button>'
+        '<div class="tc-viewport"><div class="tc-track" id="tcTrack">' + slides + '</div></div>'
+        '<button class="tc-btn" id="tcNext" aria-label="Next logos">&#8250;</button>'
+        '</div><div class="tc-dots" id="tcDots">' + dots + '</div>'
+        '</div></section>' + js)
 
 def final_cta():
     return ('<section class="section final" id="demo"><div class="accent"></div>'
@@ -344,7 +364,18 @@ replace_rows = [
 ]
 rtable_body = "".join('<tr><td>%s</td><td class="cost">%s</td><td class="chk">%s</td></tr>' % (n,c,chk()) for n,c in replace_rows)
 
-HOME = ('<section class="hero"><div class="dots"></div>'
+PARALLAX_JS = ('<script>(function(){'
+ 'var bg=document.querySelector(".hero .bg");if(!bg)return;'
+ 'var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;'
+ 'if(reduce)return;'
+ 'var ticking=false;'
+ 'function update(){var y=window.scrollY||window.pageYOffset;'
+ 'var offset=Math.min(y*0.25,70);'
+ 'bg.style.transform="translateY("+offset+"px)";ticking=false;}'
+ 'window.addEventListener("scroll",function(){if(!ticking){window.requestAnimationFrame(update);ticking=true;}},{passive:true});'
+ 'update();})();</script>')
+
+HOME = ('<section class="hero"><div class="bg"></div>'
  '<div class="wrap grid"><div>'
  '<span class="eyebrow">Built for the boots on the roof</span>'
  '<h1>All-in-one software built for <span class="u">commercial roofers.</span></h1>'
@@ -414,7 +445,7 @@ HOME = ('<section class="hero"><div class="dots"></div>'
  '<div class="plan feat"><span class="ribbon">Most Complete</span><div class="plan-icon" aria-hidden="true">Icon</div><div class="pk">Scale It</div><div class="pd">Everything, connected</div><div class="pp">$7,499<span>one-time setup</span></div></div>'
  '</div><p class="price-note">Monthly user fees: <b>$50/mo</b> field users &middot; <b>$100/mo</b> admin users. Enterprise &amp; multi-location plans available.</p>'
  '<div class="center" style="margin-top:24px"><a class="btn btn-primary" href="pricing.html">Compare Plans &amp; Pricing</a></div></div></section>'
- + final_cta())
+ + final_cta() + PARALLAX_JS)
 page("index.html", "Roofing CRM Software | Centerpoint Connect",
      "All-in-one software built for commercial roofers. Centerpoint connects every part of your business, from lead to invoice, in one platform.",
      "", HOME)
