@@ -78,7 +78,7 @@
   function onStart(){base.onStart?.();ensureHUD();makeDetails();sync()}
   function hudUpdate(){base.hud?.();sync()}
   function frame(dt,t){base.frame?.(dt,t);sync();if(bracket?.visible){bracket.yaw=Math.sin(t*2.4)*.04}}
-  function recorded(f){base.recorded?.(f);if(details?.[f?.id]){const n=details[f.id];n.sy=.78;n.y=world.roofY+.03}sync()}
+  function recorded(f){base.recorded?.(f);if(details?.[f?.id])details[f.id].y=world.roofY+.03;sync()}
   function finished(){base.finished?.();if(hud)hud.classList.add('hidden');if(bracket)bracket.visible=false}
   function garage(back){if(hud)hud.classList.add('hidden');if(bracket)bracket.visible=false;return base.garage?.(back)}
   function nextTarget(){return currentTarget()||base.nextTarget?.()}
