@@ -103,7 +103,7 @@
   function hud(){base.hud?.();ensureUI()}
   function frame(dt,t){base.frame?.(dt,t);const s=state(),interval=s.profile?.low?.18:.09;if(lastDraw<0||t-lastDraw>=interval){lastDraw=t;draw(t)}}
   function recorded(f){base.recorded?.(f);draw(lastDraw<0?0:lastDraw,true)}
-  function finished(){base.finished?.();canvas?.classList.add('hidden');$('radarTargetV30')?.classList.add('hidden')}
+  function finished(){base.finished?.();canvas?.classList.add('hidden')}
   function garage(back){canvas?.classList.add('hidden');return base.garage?.(back)}
   function scoreCard(){return base.scoreCard?.()}function nextTarget(){return base.nextTarget?.()}function photoBlocked(eye,target){return base.photoBlocked?.(eye,target)||false}
   ensureUI();
