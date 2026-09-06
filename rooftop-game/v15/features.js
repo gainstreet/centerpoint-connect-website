@@ -30,15 +30,15 @@
   function makeOperatorKit(){
    if(world.v15OperatorKit){operatorKit=world.v15OperatorKit;return operatorKit}
    const d=[];
-   // Tool belt, knee pads, boot caps and a chest radio give the owner-operator a more readable silhouette.
+   // Tool belt and radio give the owner-operator a more readable silhouette.
    R3.box(d,0,1.18,0,.72,.14,.42,'#172a36');
    R3.box(d,-.37,1.15,.02,.18,.32,.28,'#8f6740');R3.box(d,.37,1.15,.02,.18,.32,.28,'#8f6740');
-   R3.box(d,-.18,.64,.27,.23,.23,.09,'#243946');R3.box(d,.18,.64,.27,.23,.23,.09,'#243946');
-   R3.box(d,-.19,.18,.25,.34,.15,.52,'#1d3039');R3.box(d,.19,.18,.25,.34,.15,.52,'#1d3039');
    R3.box(d,.29,1.73,.34,.18,.29,.08,'#263f4e');R3.box(d,.29,1.83,.39,.055,.11,.025,'#f0d265');
    // Tablet clipped at the hip.
    R3.box(d,-.46,1.05,.18,.32,.47,.07,'#152936');R3.box(d,-.46,1.05,.225,.25,.36,.018,'#88a4ae');
-   const root=R3.node(renderer.mesh(d));root.visible=false;world.nodes.push(root);world.v15OperatorKit=root;operatorKit=root;return root;
+   const root=R3.node(renderer.mesh(d));root.visible=false;world.nodes.push(root);world.v15OperatorKit=root;operatorKit=root;
+   const p=state().player;if(p?.legs&&!p.v15LegKit){for(const leg of p.legs){const ld=[];R3.box(ld,0,-.34,.18,.25,.22,.10,'#243946');R3.box(ld,0,-.87,.14,.34,.15,.52,'#1d3039');leg.children=leg.children||[];leg.children.push(R3.node(renderer.mesh(ld)))}p.v15LegKit=true}
+   return root;
   }
   function makePerimeter(){
    if(world.v15Perimeter){perimeter=world.v15Perimeter;return perimeter}
