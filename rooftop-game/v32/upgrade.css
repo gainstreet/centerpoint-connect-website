@@ -1,0 +1,9 @@
+/* ROOFTOP 0.32 — Living District HUD cue. */
+.district-life-v32{position:absolute;left:50%;top:calc(env(safe-area-inset-top,0px) + 118px);transform:translateX(-50%);display:flex;align-items:center;gap:7px;padding:6px 10px;border:1px solid rgba(235,225,183,.28);border-radius:999px;background:rgba(20,38,49,.82);box-shadow:0 8px 24px rgba(7,18,25,.22);backdrop-filter:blur(8px);font:800 9px/1 system-ui,sans-serif;letter-spacing:.12em;color:#dae3dc;pointer-events:none;z-index:8;white-space:nowrap}
+.district-life-v32 i{width:7px;height:7px;border-radius:50%;background:#70c17d;box-shadow:0 0 0 3px rgba(112,193,125,.12)}
+.district-life-v32 span{opacity:.62}.district-life-v32 b{color:#f0d265;font-size:9px}.district-life-v32.hidden{display:none}
+.district-life-v32.pulse-v32{animation:districtV32 .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes districtV32{0%{opacity:0;transform:translate(-50%,-7px) scale(.94)}65%{opacity:1;transform:translate(-50%,1px) scale(1.03)}100%{transform:translate(-50%,0) scale(1)}}
+@media(max-width:600px){.district-life-v32{top:calc(env(safe-area-inset-top,0px) + 104px);padding:5px 8px;gap:6px;font-size:8px}.district-life-v32 b{font-size:8px}}
+@media(max-height:500px) and (orientation:landscape){.district-life-v32{left:calc(env(safe-area-inset-left,0px) + 190px);top:calc(env(safe-area-inset-top,0px) + 58px);transform:none}.district-life-v32.pulse-v32{animation:none}}
+@media(prefers-reduced-motion:reduce){.district-life-v32.pulse-v32{animation:none}}
